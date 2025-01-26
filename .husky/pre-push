@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running Pre-Push Hook: Checking Formatting & Linting..."
+
+yarn prettier --check . && yarn eslint .
+
+if [ $? -ne 0 ]; then
+  echo "❌ Push rejected! Fix ESLint and Prettier issues before pushing."
+  exit 1
+fi
+
+echo "✅ All checks passed. Proceeding with push."
